@@ -53,13 +53,14 @@ console.error(err.stack);
 
 // ABAIXO: INÍCIO DE CONEXÃO
 
-async function startAle(upsert, info, conn, qrcode, sessionStartTim) {
+async function startAle(upsert, conn, qrcode, sessionStartTim) {
 try {
 const nmrdn_dono2 = setting.numerodono.replace(new RegExp("[()+-/ +/]", "gi"),
 "") + SNET;
 
 var hora120 = moment.tz('America/Sao_Paulo').format('HH:mm:ss');
 
+for (const info of upsert?.messages || []) {
 if(upsert.type === "append") return;
 const from = info.key.remoteJid;
 const isGroup = from.endsWith('@g.us');
@@ -7266,7 +7267,7 @@ conn.sendMessage(from, {text: `
 }
 //========================================\\
 }
-
+}
 } catch (e) {
 console.log(e)
 }
